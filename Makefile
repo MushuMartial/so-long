@@ -1,39 +1,23 @@
 NAME = so_long
-SRC = main.c
+SRC = main.c mlx_utils.c hooks_utils.c parser.c check.c
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror
 LINKS = -lmlx -framework OpenGL -framework AppKit
-
-NONE='\033[0m'
-GREEN='\033[32m'
-GRAY='\033[2;37m'
-CURSIVE='\033[3m'
+CC = gcc
+RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo $(CURSIVE)$(GRAY) "     - Compiling $(NAME)..." $(NONE)
-	@gcc $(FLAGS) $(OBJ) $(LINKS) -o $(NAME)
-	@echo $(GREEN)"- Compiled -"$(NONE)
-	@rm $(OBJ)
-	@echo $(CURSIVE)$(GRAY) "     Deleted object files" $(NONE)
-
-$(OBJ): $(SRC)
-	@echo $(CURSIVE)$(GRAY) "     - Making object files..." $(NONE)
-	@gcc $(FLAGS) -c $(SRC)
-
-exe: all
-	@echo "     - Executing $(NAME)... \n"
-	@./$(NAME)
-	@echo "\n     - Done -"
+	$(CC) $(FLAGS) $(OBJ) $(LINKS) -o $(NAME)
 
 clean:
-	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)
-	@rm -rf $(OBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
-	@echo $(CURSIVE)$(GRAY) "     - Removing $(NAME)..." $(NONE)
-	@rm -rf $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re
