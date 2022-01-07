@@ -1,5 +1,5 @@
 NAME = so_long
-SRC = main.c mlx_utils.c hooks_utils.c parser.c check.c
+SRC = main.c parser.c check.c background.c
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror

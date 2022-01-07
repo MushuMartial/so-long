@@ -13,7 +13,7 @@ typedef struct	s_img {
 	char	*addr;
 	char	*path;
 	int		bits_per_pixel;
-	int		*size;
+	int		size;
 }				t_img;
 
 
@@ -23,24 +23,24 @@ typedef struct	s_data {
 	char 	**map;
 	int		len;
 	int		height;
+	int 	x;
+	int 	y;
 }				t_data;
 
-/* mlx utils */
-//void	my_mlx_pixel_put(t_data *data, int x, int y, int color); //Put pixel
-
-/* hooks utils*/
-//int	key_hook(int keycode, t_vars *vars); //Print Keyes
-//int	close_w(int keycode, t_vars *vars); //Close Window
+/*background*/
+void    background(t_data *data, t_img *img);
 
 /* check */
-void check_format(t_data *data);
+void 	check_format(t_data *data);
+void	check_char(t_data *data, int letter);
+void 	check_wall(t_data *data);
 
 /* parser */
-void	parser(char *file);
+void	parser(char *file, t_data *data);
 void	init_len_height(char *file, t_data *data);
 void	map_init(t_data *data);
-void make_map(char *file, t_data *data);
-void fill_map(int fd, t_data *data, char *buffer);
+void 	make_map(char *file, t_data *data);
+void 	fill_map(int fd, t_data *data, char *buffer);
 
 
 #endif

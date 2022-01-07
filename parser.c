@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:17:05 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/06 16:23:43 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/07 14:24:45 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,16 @@ void fill_map(int fd, t_data *data, char *buffer)
 		if (buffer[0] == '\n')
 		{	
 			j++;
-			i = 0;
+			i = -1;
 		}
 		else
         {
-			data->map[j][i++] = buffer[0];
-            write(1,"b\n",2);
+			data->map[j][i] = buffer[0];
         }
+		i++;
 	}
 }
+
 void make_map(char *file, t_data *data)
 {
 	int fd;
