@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 13:17:05 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/07 14:24:45 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:55:47 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_len_height(char *file, t_data *data)
 	}
 	data->len /= data->height;
 	data->len--;
+	free(buffer);
 }
 
 void	map_init(t_data *data)
@@ -97,62 +98,5 @@ void make_map(char *file, t_data *data)
 	if (fd < 0)
 		exit(0);
 	fill_map(fd, data, buffer);
+	free(buffer);
 }
-/*
-void    check_map(char *map, *)
-{
-    int fd;
-    int ret;
-    char *buffer;
-    int height;
-    int lenght;
-    
-    ret = 1;
-    buffer = malloc(sizeof(char) * 2);
-    if (!buffer)
-        exit(0);
-    buffer[ret] = '\0';
-    fd = open(map, O_RDONLY);
-    if (fd < 0)
-        exit(0);
-    while (ret > 0)
-    {
-        ret = read(fd, buffer, 1);
-        if (buffer[0] != '1' & buffer[0] != '0' & buffer[0] != '\n'
-        & buffer[0] != 'C' & buffer[0] != 'E' & buffer[0] != 'P')
-        {
-            printf("error\n");
-            exit(0);
-        }
-    }
-    map_fill(map, 'C', 0);
-    map_fill(map, 'P', 0);
-    map_fill(map, 'E', 0);
-}
-
-void map_fill(char *map, int letter, int num)
-{
-    int fd;
-    int ret;
-    char *buffer;
-    
-    ret = 1;
-    buffer = malloc(sizeof(char) * 2);
-    if (!buffer)
-        exit(0);
-    buffer[ret] = '\0';
-    fd = open(map, O_RDONLY);
-    if (fd < 0)
-        exit(0);
-    while (ret > 0)
-    {
-        ret = read(fd, buffer, 1);
-        if (buffer[0] == letter)
-            num++;
-    }
-    if (num > 1)
-    {
-        printf("error\n");
-        exit(0);
-    }
-}*/

@@ -1,5 +1,5 @@
 NAME = so_long
-SRC = main.c parser.c check.c background.c
+SRC = main.c parser.c check.c background.c move.c
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror

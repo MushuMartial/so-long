@@ -11,6 +11,12 @@
 typedef struct	s_img {
 	void	*img;
 	char	*addr;
+	void	*img_h;
+	char	*addr_h;
+	void	*img_f;
+	char	*addr_f;
+	void	*img_e;
+	char	*addr_e;
 	char	*path;
 	int		bits_per_pixel;
 	int		size;
@@ -25,10 +31,18 @@ typedef struct	s_data {
 	int		height;
 	int 	x;
 	int 	y;
+	int		count_c;
 }				t_data;
+
 
 /*background*/
 void    background(t_data *data, t_img *img);
+void    characters(t_data *data, t_img *img);
+
+/*move*/
+int 	exit_mlx(t_data	*data);
+void 	player_pos(t_data *data);
+int		key_hook(int keycode, t_data *data, t_img *img);
 
 /* check */
 void 	check_format(t_data *data);
