@@ -16,7 +16,6 @@
 	void	*img;
 	char	*addr;
 	char	*path;
-	int		bits_per_pixel;
 	int		size;
 }t_img;
 s_data {
@@ -28,7 +27,6 @@ s_data {
 	int 	x;
 	int 	y;
 	int		count_c;
-	2560, 1396
 }				t_data;*/
 int	main(int argc, char *argv[])
 {
@@ -43,6 +41,7 @@ int	main(int argc, char *argv[])
 		data.mlx = mlx_init();
 		img.size = 64;
 		data.count_c = 0;
+		data.walk = 0;
 		data.win = mlx_new_window(data.mlx, data.len * 64, data.height * 64, "so long");
 		background(&data, &img);
 		characters(&data, &img);
@@ -53,18 +52,37 @@ int	main(int argc, char *argv[])
 	}
 }
 
+void	check_arg(char *file)
+{
+	int i;
+
+	i = ft_strlen(file);
+	if (i < 5)
+		exit(0);
+	if (file[i -1] != 'r')
+		exit(0);
+	if (file[i -2] != 'e')
+		exit(0);
+	if (file[i -3] != 'b')
+		exit(0);
+	if (file[i -4] != '.')
+		exit(0);
+	
+}
+
 void	parser(char *file, t_data *data)
 {
 	data->height = 1;
 	data->len = 0;
+	check_arg(file);
 	init_len_height(file, data);
-	map_init(data);
 	if (data->height < 3)
 		exit(0);
+	map_init(data);
 	make_map(file, data);
 	check_format(data);
 	if (data->x > 40 | data->y > 21)
-		exit(0);
+		free_all(data);
 	check_char(data, 'C');
 	check_char(data, 'P');
 	check_char(data, 'E');

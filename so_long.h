@@ -32,6 +32,7 @@ typedef struct	s_data {
 	int 	x;
 	int 	y;
 	int		count_c;
+	int		walk;
 }				t_data;
 
 

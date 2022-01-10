@@ -30,7 +30,7 @@ void check_format(t_data *data)
 			&& data->map[j][i] != '\n')
 			{
 				printf("error map format\n");
-				exit(0);
+				free_all(data);
 			}
             i++;
 		}
@@ -56,15 +56,10 @@ void	check_char(t_data *data, int letter)
             i++;
 		}
 	}
-	if (count == 0)
-	{
-		printf("error in map\n");
-		exit(0);
-	}
-	if (count > 1 && letter == 'P')
+	if (count > 1 && letter == 'P' | count == 0)
 	{
 		printf("error player number\n");
-		exit(0);
+		free_all(data);
 	}
 }
 
@@ -78,7 +73,7 @@ void check_wall(t_data *data)
 		if (data->map[i][0] != '1' && data->map[i][data->len] != '1')
 		{
 			printf("error wall\n");
-			exit(0);
+			free_all(data);
 		}
 		i++;
 	}
@@ -88,7 +83,7 @@ void check_wall(t_data *data)
 		if (data->map[0][i] != '1' | data->map[data->height - 1][i] != '1')
 		{
 			printf("error wall\n");
-			exit(0);
+			free_all(data);
 		}
 		i++;
 	}
