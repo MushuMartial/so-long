@@ -6,17 +6,16 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:48:15 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/08 13:41:26 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:01:54 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "so_long.h"
 
-void check_format(t_data *data)
+void	check_format(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 0;
 	while (j < data->height)
@@ -29,10 +28,11 @@ void check_format(t_data *data)
 			&& data->map[j][i] != '1' && data->map[j][i] != '\0'
 			&& data->map[j][i] != '\n')
 			{
-				printf("error map format\n");
+				write(2, "Error\nWrong map format", 22);
+				exit(0);
 				free_all(data);
 			}
-            i++;
+			i++;
 		}
 		j++;
 	}
@@ -40,9 +40,9 @@ void check_format(t_data *data)
 
 void	check_char(t_data *data, int letter)
 {
-	int i;
-	int j;
-	int count;
+	int	i;
+	int	j;
+	int	count;
 
 	count = 0;
 	j = -1;
@@ -53,26 +53,26 @@ void	check_char(t_data *data, int letter)
 		{
 			if (data->map[j][i] == letter)
 				count++;
-            i++;
+			i++;
 		}
 	}
-	if (count > 1 && letter == 'P' | count == 0)
+	if ((count > 1 && letter == 'P') || count == 0)
 	{
-		printf("error player number\n");
+		write(2, "Error\nWrong map format", 22);
 		free_all(data);
 	}
 }
 
-void check_wall(t_data *data)
+void	check_wall(t_data *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < data->height)
 	{
-		if (data->map[i][0] != '1' && data->map[i][data->len] != '1')
+		if (data->map[i][0] != '1' || data->map[i][data->len - 1] != '1')
 		{
-			printf("error wall\n");
+			write(2, "Error\nWrong map format wall", 27);
 			free_all(data);
 		}
 		i++;
@@ -80,11 +80,53 @@ void check_wall(t_data *data)
 	i = 0;
 	while (i < data->len)
 	{
-		if (data->map[0][i] != '1' | data->map[data->height - 1][i] != '1')
+		if (data->map[0][i] != '1' || data->map[data->height - 1][i] != '1')
 		{
-			printf("error wall\n");
+			write(2, "Error\nWrong map format wall", 27);
 			free_all(data);
 		}
 		i++;
+	}
+}
+
+void	check_arg(char *file)
+{
+	int	i;
+
+	i = ft_strlen(file);
+	if (i < 5)
+	{
+		write(2, "Error\nWrong map format .ber", 27);
+		exit(0);
+	}
+	if (file[i - 1] != 'r' || file[i - 2] != 'e' || file[i - 3] != 'b'
+		|| file[i - 4] != '.')
+	{
+		write(2, "Error\nWrong map format .ber", 27);
+		exit(0);
+	}
+}
+
+void	player_pos(t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < data->height)
+	{
+		i = 0;
+		while (i < data->len)
+		{
+			if (data->map[j][i] == 'P')
+			{
+				data->x = i;
+				data->y = j;
+			}
+			else if (data->map[j][i] == 'C')
+				data->count_c++;
+			i++;
+		}
+		j++;
 	}
 }

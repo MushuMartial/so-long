@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/11 10:08:41 by tmartial          #+#    #+#             */
+/*   Updated: 2022/01/11 15:57:35 by tmartial         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <fcntl.h>
-#include "mlx.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <fcntl.h>
+# include "mlx.h"
 
-typedef struct	s_img {
+typedef struct s_img {
 	void	*img;
 	char	*addr;
 	void	*img_h;
@@ -18,44 +30,48 @@ typedef struct	s_img {
 	void	*img_e;
 	char	*addr_e;
 	char	*path;
-	int		bits_per_pixel;
 	int		size;
 }				t_img;
 
-
-typedef struct	s_data {
+typedef struct s_data {
 	void	*mlx;
 	void	*win;
-	char 	**map;
+	char	**map;
 	int		len;
 	int		height;
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 	int		count_c;
 	int		walk;
 }				t_data;
 
+/* main */
+void	parser(char *file, t_data *data);
+int		ft_strlen(char *s);
+void	free_all(t_data *data);
 
-/*background*/
-void    background(t_data *data, t_img *img);
-void    characters(t_data *data, t_img *img);
+/* background */
+void	background(t_data *data, t_img *img); //print background
+void	characters(t_data *data, t_img *img); //print elements
 
-/*move*/
-int 	exit_mlx(t_data	*data);
-void 	player_pos(t_data *data);
-int		key_hook(int keycode, t_data *data, t_img *img);
+/* move */
+int		exit_mlx(t_data	*data); //mouse click exit
+void	move_player(t_data *data, t_img *img, int y, int x); //move player
+void	player_pos(t_data *data); //cordinate player
+int		key_hook(int keycode, t_data *data, t_img *img); //key_hook moves
 
 /* check */
-void 	check_format(t_data *data);
-void	check_char(t_data *data, int letter);
-void 	check_wall(t_data *data);
+void	check_format(t_data *data); //letters im map
+void	check_char(t_data *data, int letter); //num of elem
+void	check_wall(t_data *data); //wall
+void	check_arg(char *file); //map .ber input
+void	player_pos(t_data *data); //look player pos
 
 /* parser */
-void	parser(char *file, t_data *data);
-void	init_len_height(char *file, t_data *data);
-void	map_init(t_data *data);
-void 	make_map(char *file, t_data *data);
-void 	fill_map(int fd, t_data *data, char *buffer);
-
+void	init_len_height(char *file, t_data *data);//find len&height
+void	map_init(t_data *data);//malloc **map
+void	make_map(char *file, t_data *data); //read map
+void	fill_map(int fd, t_data *data, char *buffer);//fill **map
+void	fill_map2(t_data *data, char *buffer);
 
 #endif

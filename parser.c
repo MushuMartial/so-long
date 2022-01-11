@@ -5,22 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 13:17:05 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/10 16:55:47 by tmartial         ###   ########.fr       */
+/*   Created: 2022/01/11 09:44:29 by tmartial          #+#    #+#             */
+/*   Updated: 2022/01/11 16:04:17 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "so_long.h"
 
 void	init_len_height(char *file, t_data *data)
 {
-	int fd;
-	char *buffer;
-	int ret;
-	
+	int		fd;
+	char	*buffer;
+	int		ret;
+
 	buffer = malloc(sizeof(char) * 2);
-	if(!buffer)
+	if (!buffer)
 		exit(0);
 	buffer[1] = '\0';
 	ret = 1;
@@ -45,7 +44,7 @@ void	init_len_height(char *file, t_data *data)
 void	map_init(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	data->map = malloc(sizeof(char *) * (data->height + 1));
 	if (!data->map)
@@ -59,22 +58,11 @@ void	map_init(t_data *data)
 	}
 }
 
-void	free_all(t_data *data)
+void	fill_map(int fd, t_data *data, char *buffer)
 {
-	int i;
-
-	i = 0;
-	while (data->map[i] != NULL)
-		free(data->map[i++]);
-	free(data->map);
-	exit(0);
-}
-
-void fill_map(int fd, t_data *data, char *buffer)
-{
-	int ret;
-	int i;
-	int j;
+	int	ret;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -82,11 +70,11 @@ void fill_map(int fd, t_data *data, char *buffer)
 	while (ret == 1)
 	{
 		ret = read(fd, buffer, 1);
-		if (i == data->len && buffer[0] != '\n' && buffer[0] != '\0')
-		{
-			free(buffer);
-			free_all(data);
-		}
+		if (buffer[0] == '\n' && j - 1 == data->height)
+			return ;
+		if ((i == data->len && buffer[0] != '\n')
+			|| (buffer[0] != '\n' && i == data->len))
+			fill_map2(data, buffer);
 		if (buffer[0] == '\n')
 		{	
 			j++;
@@ -98,13 +86,20 @@ void fill_map(int fd, t_data *data, char *buffer)
 	}
 }
 
-void make_map(char *file, t_data *data)
+void	fill_map2(t_data *data, char *buffer)
 {
-	int fd;
-	char *buffer;
-	
+	free(buffer);
+	write(2, "Error\nWrong map format", 22);
+	free_all(data);
+}
+
+void	make_map(char *file, t_data *data)
+{
+	int		fd;
+	char	*buffer;
+
 	buffer = malloc(sizeof(char) * 2);
-	if(!buffer)
+	if (!buffer)
 		free_all(data);
 	buffer[1] = '\0';
 	fd = open(file, O_RDONLY);

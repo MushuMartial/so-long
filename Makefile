@@ -2,7 +2,7 @@ NAME = so_long
 SRC = main.c parser.c check.c background.c move.c
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 LINKS = -lmlx -framework OpenGL -framework AppKit
 CC = gcc
 RM = rm -rf
@@ -10,7 +10,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LINKS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LINKS) -o $(NAME)
 
 clean:
 	$(RM) $(OBJ)
