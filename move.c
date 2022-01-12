@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:44:00 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/11 17:18:31 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:39:56 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,7 @@ int	key_hook(int keycode, t_data *data, t_img *img)
 	}
 	if (data->map[data->y][data->x] == 'D' && data->count_c == 0)
 		free_all(data);
+	if (data->map[data->y][data->x] == 'D' && data->count_c != 0)
+		mlx_string_put(data->mlx, data->win, 5, 5, 0X00FFFFFF,"You Need to collect the diamonds before to exit");
 	return (0);
 }

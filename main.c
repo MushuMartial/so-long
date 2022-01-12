@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 11:02:51 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/11 16:59:32 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:43:26 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	parser(char *file, t_data *data)
 	data->len = 0;
 	check_arg(file);
 	init_len_height(file, data);
+	check_len(file, data);
 	if (data->height < 3)
 	{
 		write(2, "Error\nmap to small", 18);
@@ -77,5 +78,45 @@ void	free_all(t_data *data)
 	while (data->map[i] != NULL && i < data->height)
 		free(data->map[i++]);
 	free(data->map);
+	//system("leaks so_long");
 	exit(0);
+}
+
+void	check_len(char *file, t_data *data)
+{
+	int	ret;
+	int	i;
+	int j;
+	int		fd;
+	char	*buffer;
+
+	buffer = malloc(sizeof(char) * 2);
+	if (!buffer)
+		free_all(data);
+	buffer[1] = '\0';
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		free(buffer);
+		free_all(data);
+	}
+	i = 0;
+	j = 0;
+	ret = 1;
+	while (ret == 1)
+	{
+		ret = read(fd, buffer, 1);
+		if (buffer[0] == '\n' && i != data->len && j != data->height)
+		{
+			write(1,"sheesh\n",7);
+			exit(0);
+		}
+		if (buffer[0] == '\n')
+		{	
+			i = -1;
+			j++;
+		}
+		i++;
+	}
+	free(buffer);
 }

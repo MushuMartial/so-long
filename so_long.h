@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:08:41 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/11 15:57:35 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/12 10:45:18 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data {
 void	parser(char *file, t_data *data);
 int		ft_strlen(char *s);
 void	free_all(t_data *data);
+void	check_len(char *file, t_data *data);
 
 /* background */
 void	background(t_data *data, t_img *img); //print background

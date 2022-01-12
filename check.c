@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:48:15 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/11 16:01:54 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/12 11:30:54 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	check_format(t_data *data)
 			&& data->map[j][i] != '\n')
 			{
 				write(2, "Error\nWrong map format", 22);
-				exit(0);
 				free_all(data);
 			}
 			i++;

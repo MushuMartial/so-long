@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:44:29 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/11 16:04:17 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:39:37 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,8 @@ void	fill_map(int fd, t_data *data, char *buffer)
 	while (ret == 1)
 	{
 		ret = read(fd, buffer, 1);
-		if (buffer[0] == '\n' && j - 1 == data->height)
+		if (buffer[0] == '\n' && j + 1 == data->height)
 			return ;
-		if ((i == data->len && buffer[0] != '\n')
-			|| (buffer[0] != '\n' && i == data->len))
-			fill_map2(data, buffer);
 		if (buffer[0] == '\n')
 		{	
 			j++;
