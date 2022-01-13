@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:44:29 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/12 15:39:37 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:07:30 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,5 @@ void	make_map(char *file, t_data *data)
 	}
 	fill_map(fd, data, buffer);
 	free(buffer);
+	close(fd);
 }

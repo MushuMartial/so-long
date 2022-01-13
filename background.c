@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 13:07:40 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/11 16:01:32 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/13 13:57:13 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,14 @@ void	characters(t_data *data, t_img *img)
 		}
 		data->y++;
 	}
+}
+
+int	ft_strlen(char *s)
+{
+	int	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
 }

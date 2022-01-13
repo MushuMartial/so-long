@@ -6,7 +6,7 @@
 /*   By: tmartial <tmartial@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 11:02:51 by tmartial          #+#    #+#             */
-/*   Updated: 2022/01/12 15:43:26 by tmartial         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:07:05 by tmartial         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,6 @@ void	parser(char *file, t_data *data)
 	check_wall(data);
 }
 
-int	ft_strlen(char *s)
-{
-	int	len;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	return (len);
-}
-
 void	free_all(t_data *data)
 {
 	int	i;
@@ -78,28 +68,35 @@ void	free_all(t_data *data)
 	while (data->map[i] != NULL && i < data->height)
 		free(data->map[i++]);
 	free(data->map);
-	//system("leaks so_long");
 	exit(0);
 }
 
 void	check_len(char *file, t_data *data)
 {
-	int	ret;
-	int	i;
-	int j;
 	int		fd;
 	char	*buffer;
 
 	buffer = malloc(sizeof(char) * 2);
 	if (!buffer)
-		free_all(data);
+		exit(0);
 	buffer[1] = '\0';
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
 		free(buffer);
-		free_all(data);
+		exit(0);
 	}
+	check_len2(fd, buffer, data);
+	free(buffer);
+	close(fd);
+}
+
+void	check_len2(int fd, char *buffer, t_data *data)
+{
+	int	i;
+	int	j;
+	int	ret;
+
 	i = 0;
 	j = 0;
 	ret = 1;
@@ -108,7 +105,7 @@ void	check_len(char *file, t_data *data)
 		ret = read(fd, buffer, 1);
 		if (buffer[0] == '\n' && i != data->len && j != data->height)
 		{
-			write(1,"sheesh\n",7);
+			write(2, "Error\nWrong map format", 22);
 			exit(0);
 		}
 		if (buffer[0] == '\n')
@@ -118,5 +115,4 @@ void	check_len(char *file, t_data *data)
 		}
 		i++;
 	}
-	free(buffer);
 }
